@@ -1,15 +1,3 @@
-""""Salvatore Rosa
-
-Unit Tests
-----------
-
-Written with Python 3.7.x.
-Should work with the latest Python as well.
-
-To run unit tests in terminal:
->python -m unittest test_bar_graph_from_csv.py
-"""
-
 import unittest
 from typing import List
 import csv

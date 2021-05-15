@@ -1,13 +1,9 @@
 """Salvatore Rosa
 
 Bar Graph From .csv File
-------------------------
-
-Written with Python 3.7.x.
-Should work with the latest Python as well.
 
 To run in terminal:
->python bar_graph_from_csv.py --file_name 'file.csv' --multiple 20
+>python bar_graph_from_csv.py --file_name 'test-data.csv' --multiple 20
 
 Please note --file_name is required and --multiple is optional (default 10).
 """
@@ -19,7 +15,7 @@ from itertools import chain, count
 
 
 class Column(NamedTuple):
-    """Simple class for representing a column in a .csv file.
+    """Represents a column in a .csv file.
 
     Attributes:
         name -- the name of the column (example: year).
