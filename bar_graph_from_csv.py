@@ -108,42 +108,60 @@ def draw_bar_graph(
             multiple,
         )
     ]
+    offset = 8
+    locations: List[int] = []
+    draw_x_axis_labels(y_label_column, x_axis_values, offset, locations)
+    print(Y_LABEL_COLUMN.name)
+    for index in range(len(Y_LABEL_COLUMN.data)):
+        print(Y_LABEL_COLUMN.data[index])
+        for column in COLUMNS:
+            if column.data[index] in x_axis_values:
+                draw_bar_to_point_of_value(locations, x_axis_values, column, index)
+            else:
+                draw_bar_to_midpoint_of_two_values(
+                    locations, x_axis_values, column, index, offset
+                )
+
+
+def draw_x_axis_labels(
+    y_label_column: Column, x_axis_values: List[str], offset: int, locations: List[int]
+) -> None:
+    """Draw all the values of the x axis."""
     previous_value_length = 0
     left_margin = get_left_margin_space(y_label_column)
     x_axis_label = " " * left_margin
-    offset = 8
-    locations = []
-    # Draw the x-axis labels in the terminal.
     for value, x in zip(x_axis_values, count(0, offset)):
         locations.append(left_margin + previous_value_length + x)
         x_axis_label += value + " " * (offset)
         previous_value_length += len(value)
     print(x_axis_label)
-    print(Y_LABEL_COLUMN.name)
-    for index in range(len(Y_LABEL_COLUMN.data)):
-        print(Y_LABEL_COLUMN.data[index])
-        for column in COLUMNS:
-            # If the field value exactly matches one of the labels on the x-axis,
-            # draw a bar up to it.
-            if column.data[index] in x_axis_values:
-                print(
-                    "|" * locations[x_axis_values.index(column.data[index])]
-                    + f" {column.name} {column.data[index]}"
-                )
-            # If the field value is between two of the labels on the x-axis,
-            # draw a bar up to their midpoint.
-            else:
-                for x_axis_value in x_axis_values:
-                    if int(column.data[index]) < int(x_axis_value):
-                        print(
-                            "|"
-                            * (
-                                locations[x_axis_values.index(x_axis_value)]
-                                - offset // 2
-                            )
-                            + f" {column.name} {column.data[index]}"
-                        )
-                        break
+
+
+def draw_bar_to_point_of_value(
+    locations: List[int], x_axis_values: List[str], column: Column, index: int
+) -> None:
+    """Draw a bar to the exact point of a value."""
+    print(
+        "|" * locations[x_axis_values.index(column.data[index])]
+        + f" {column.name} {column.data[index]}"
+    )
+
+
+def draw_bar_to_midpoint_of_two_values(
+    locations: List[int],
+    x_axis_values: List[str],
+    column: Column,
+    index: int,
+    offset: int,
+) -> None:
+    """Draw a bar up to the midpoint of two values."""
+    for x_axis_value in x_axis_values:
+        if int(column.data[index]) < int(x_axis_value):
+            print(
+                "|" * (locations[x_axis_values.index(x_axis_value)] - offset // 2)
+                + f" {column.name} {column.data[index]}"
+            )
+            break
 
 
 if __name__ == "__main__":
