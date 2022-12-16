@@ -1,13 +1,3 @@
-"""Salvatore Rosa
-
-Bar Graph From .csv File
-
-To run in terminal:
->python bar_graph_from_csv.py --file_name 'test-data.csv' --multiple 20
-
-Please note --file_name is required and --multiple is optional (default 10).
-"""
-
 import csv
 from argparse import ArgumentParser
 from typing import NamedTuple, List
